@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "css-build": "node-sass --omit-source-map-url src/mystyles.scss src/styles.css",
+    "css-watch": "npm run css-build -- --watch"
   },
   "private": true,
   "dependencies": {
@@ -18,7 +20,9 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "bulma": "^0.9.3",
     "ngx-socket-io": "^4.2.0",
+    "node-sass": "^7.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

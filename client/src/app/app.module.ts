@@ -4,9 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { DocumentListComponent } from './components/document-list/document-list.component';
-import { DocumentComponent } from './components/document/document.component';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -16,8 +15,7 @@ const config: SocketIoConfig = {
 @NgModule({
 	declarations: [
 		AppComponent,
-  		DocumentListComponent,
-  		DocumentComponent 
+  		NavbarComponent
 	],
 	imports: [
 		BrowserModule,
