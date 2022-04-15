@@ -1,0 +1,16 @@
+<div class="modal" [ngClass]="isOpen ? 'is-active' : ''">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Sign In</p>
+      <button class="delete"(click)="onModalCloseClick()" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success">Sign In</button>
+      <button class="button" (click)="onModalCloseClick()">Cancel</button>
+    </footer>
+  </div>
+</div>

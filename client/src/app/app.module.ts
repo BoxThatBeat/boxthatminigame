@@ -9,6 +9,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarPlayersComponent } from './components/sidebar-players/sidebar-players.component';
 import { SidebarScoreboardComponent } from './components/sidebar-scoreboard/sidebar-scoreboard.component';
+import { SignInModalComponent } from './components/sign-in-modal/sign-in-modal.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -20,7 +21,8 @@ const config: SocketIoConfig = {
 		AppComponent,
     NavbarComponent,
     SidebarPlayersComponent,
-    SidebarScoreboardComponent
+    SidebarScoreboardComponent,
+    SignInModalComponent
 	],
 	imports: [
 		BrowserModule,

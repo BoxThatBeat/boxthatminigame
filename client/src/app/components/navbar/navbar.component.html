@@ -5,7 +5,7 @@
     </a>
 
     <a role="button" [ngClass]="isOpen ? 'is-active' : ''" (click)="onHamburgerClick()" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true" class="is-white"></span>
+      <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
@@ -54,7 +54,7 @@
           <a class="button is-primary">
             <strong>Create Account</strong>
           </a>
-          <a class="button is-light">
+          <a class="button is-light" (click)="onSignInClick()">
             Log in
           </a>
         </div>

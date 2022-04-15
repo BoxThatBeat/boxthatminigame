@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,15 +9,17 @@ import { Component } from '@angular/core';
 export class NavbarComponent {
 
   // If true, menu opens on mobile, hamburger button becomes an X
-  public isOpen:boolean;
+  public isOpen:boolean = false;
 
-  constructor() {
-    this.isOpen = false;
-   }
+  constructor(private modalService: ModalService) {}
 
    onHamburgerClick(): void {
     // Toggle menu on mobile
     this.isOpen = this.isOpen ? false : true;
+  }
+
+  onSignInClick(): void {
+    this.modalService.openModal('SignIn');
   }
 
 }
