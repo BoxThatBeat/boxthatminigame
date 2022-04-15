@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
-  constructor() { }
+  // If true, menu opens on mobile, hamburger button becomes an X
+  public isOpen:boolean;
 
-  ngOnInit(): void {
+  constructor() {
+    this.isOpen = false;
+   }
+
+   onHamburgerClick(): void {
+    // Toggle menu on mobile
+    this.isOpen = this.isOpen ? false : true;
   }
 
 }

@@ -1,47 +1,47 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-gun-metal" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <h2 class="title">BoxThatMiniGame</h2>
+      <h2 class="title has-text-primary">BoxThatMiniGame</h2>
     </a>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
+    <a role="button" [ngClass]="isOpen ? 'is-active' : ''" (click)="onHamburgerClick()" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true" class="is-white"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="minigames" class="navbar-menu">
+  <div id="minigames" [ngClass]="isOpen ? 'is-active' : ''" class="navbar-menu has-background-gun-metal">
     <div class="navbar-start">
-      <a class="navbar-item">
+      <a class="navbar-item has-text-sea-shell">
         CountingMania
       </a>
 
-      <a class="navbar-item">
+      <a class="navbar-item has-text-sea-shell">
         AlphabetMania
       </a>
 
-      <a class="navbar-item">
+      <a class="navbar-item has-text-sea-shell">
         TypingMania
       </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
+        <a class="navbar-link has-text-sea-shell">
           More
         </a>
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
+        <div class="navbar-dropdown has-background-gun-metal">
+          <a class="navbar-item has-text-sea-shell">
             About
           </a>
-          <a class="navbar-item">
+          <a class="navbar-item has-text-sea-shell">
             Jobs
           </a>
-          <a class="navbar-item">
+          <a class="navbar-item has-text-sea-shell">
             Contact
           </a>
           <hr class="navbar-divider">
-          <a class="navbar-item">
+          <a class="navbar-item has-text-sea-shell">
             Report an issue
           </a>
         </div>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item">
+      <div class="navbar-item has-background-gun-metal">
         <div class="buttons">
           <a class="button is-primary">
             <strong>Create Account</strong>

@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarPlayersComponent } from './components/sidebar-players/sidebar-players.component';
+import { SidebarScoreboardComponent } from './components/sidebar-scoreboard/sidebar-scoreboard.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -15,12 +18,15 @@ const config: SocketIoConfig = {
 @NgModule({
 	declarations: [
 		AppComponent,
-  		NavbarComponent
+    NavbarComponent,
+    SidebarPlayersComponent,
+    SidebarScoreboardComponent
 	],
 	imports: [
 		BrowserModule,
 		FormsModule,
-		SocketIoModule.forRoot(config), 
+    CommonModule,
+		SocketIoModule.forRoot(config)
 	],
 	providers: [],
 	bootstrap: [AppComponent]
