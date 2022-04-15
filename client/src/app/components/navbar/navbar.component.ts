@@ -18,6 +18,10 @@ export class NavbarComponent {
     this.isOpen = this.isOpen ? false : true;
   }
 
+  onCreateAccountClick(): void {
+    this.modalService.openModal('CreateAccount');
+  }
+
   onSignInClick(): void {
     this.modalService.openModal('SignIn');
   }

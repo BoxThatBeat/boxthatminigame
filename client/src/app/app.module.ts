@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarPlayersComponent } from './components/sidebar-players/sidebar-players.component';
 import { SidebarScoreboardComponent } from './components/sidebar-scoreboard/sidebar-scoreboard.component';
 import { SignInModalComponent } from './components/sign-in-modal/sign-in-modal.component';
+import { CreateAccountModalComponent } from './components/create-account-modal/create-account-modal.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -22,7 +23,8 @@ const config: SocketIoConfig = {
     NavbarComponent,
     SidebarPlayersComponent,
     SidebarScoreboardComponent,
-    SignInModalComponent
+    SignInModalComponent,
+    CreateAccountModalComponent
 	],
 	imports: [
 		BrowserModule,

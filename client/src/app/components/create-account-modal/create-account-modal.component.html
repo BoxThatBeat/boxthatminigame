@@ -2,7 +2,7 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">SignIn</p>
+      <p class="modal-card-title">Create Account</p>
       <button class="delete"(click)="onModalCloseClick()" aria-label="close"></button>
     </header>
     <section class="modal-card-body">
@@ -12,6 +12,7 @@
         <div class="control">
           <input class="input is-success" type="text" placeholder="Username">
         </div>
+        <p class="help is-success">This username is available</p>
       </div>
       <div class="field">
         <label class="label"></label>
@@ -22,7 +23,7 @@
 
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success has-text-white">SignIn</button>
+      <button class="button is-success has-text-white">Create Account</button>
       <button class="button" (click)="onModalCloseClick()">Cancel</button>
     </footer>
   </div>
