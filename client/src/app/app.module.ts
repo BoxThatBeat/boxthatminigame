@@ -11,6 +11,9 @@ import { SidebarPlayersComponent } from './components/sidebar-players/sidebar-pl
 import { SidebarScoreboardComponent } from './components/sidebar-scoreboard/sidebar-scoreboard.component';
 import { SignInModalComponent } from './components/sign-in-modal/sign-in-modal.component';
 import { CreateAccountModalComponent } from './components/create-account-modal/create-account-modal.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { fakeBackendProvider } from './_helpers/fake-backend';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -30,9 +33,15 @@ const config: SocketIoConfig = {
 		BrowserModule,
 		FormsModule,
     CommonModule,
+    HttpClientModule,
 		SocketIoModule.forRoot(config)
 	],
-	providers: [],
+	providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+    // provider used to create fake backend
+    fakeBackendProvider
+],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

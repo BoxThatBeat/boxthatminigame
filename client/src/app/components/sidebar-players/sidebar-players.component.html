@@ -24,93 +24,12 @@
     <!--TODO: add online vs in game circle (green or orange)-->
     Warsna - Online
   </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
+  <ul>
+    <li *ngFor="let user of users">
+        {{user.username}}
+        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+    </li>
+  </ul>
   
   <div class="panel-block">
     <button class="button is-link is-outlined is-fullwidth">
