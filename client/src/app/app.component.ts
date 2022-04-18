@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from './models/user.model';
-import { AuthenticationService } from './services/authentication.service';
+import { AccountService } from './services/account.service';
 
 @Component({ 
   selector: 'app-root', 
@@ -10,15 +10,13 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
   
   title = 'BoxThatMiniGame';
-  currentUser: User = new User;
+  user: User = new User;
 
-  constructor(
-      private authenticationService: AuthenticationService
-  ) {
-      this.authenticationService.currentUser.subscribe((x: any) => this.currentUser = x);
-  }
+    constructor(private accountService: AccountService) {
+        this.accountService.user.subscribe(x => this.user = x);
+    }
 
-  logout() {
-      this.authenticationService.logout();
-  }
+    logout() {
+        this.accountService.logout();
+    }
 }

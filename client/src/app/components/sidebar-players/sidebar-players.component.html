@@ -7,6 +7,12 @@
       <input class="input" type="text" placeholder="Search">
     </p>
   </div>
+  <div *ngFor="let user of users">
+    <a class="panel-block is-active">
+      <!--TODO: add online vs in game circle (green or orange)-->
+      {{user.username}}
+    </a>
+  </div>
   <a class="panel-block is-active">
     <!--TODO: add online vs in game circle (green or orange)-->
     Warsna - Online
@@ -24,12 +30,6 @@
     <!--TODO: add online vs in game circle (green or orange)-->
     Warsna - Online
   </a>
-  <ul>
-    <li *ngFor="let user of users">
-        {{user.username}}
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-    </li>
-  </ul>
   
   <div class="panel-block">
     <button class="button is-link is-outlined is-fullwidth">

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
 import { first } from 'rxjs/operators';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'sidebar-players',
@@ -11,30 +10,14 @@ import { first } from 'rxjs/operators';
 })
 export class SidebarPlayersComponent implements OnInit {
 
-  currentUser: User;
   users:User[] = [];
 
-  constructor(
-    private authenticationService: AuthenticationService,
-    private userService: UserService) { 
-      
-      this.currentUser = this.authenticationService.currentUserValue;
+  constructor(private accountService: AccountService) {}
+
+    ngOnInit() {
+        this.accountService.getAll()
+            .pipe(first())
+            .subscribe(users => this.users = users);
     }
-
-  ngOnInit() {
-    this.loadAllUsers();
-  }
-
-  deleteUser(id: number) {
-      this.userService.delete(id)
-          .pipe(first())
-          .subscribe(() => this.loadAllUsers());
-  }
-
-  private loadAllUsers() {
-      this.userService.getAll()
-          .pipe(first())
-          .subscribe(users => this.users = users);
-  }
 
 }
