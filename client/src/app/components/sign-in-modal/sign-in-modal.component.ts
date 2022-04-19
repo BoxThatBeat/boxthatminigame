@@ -27,8 +27,7 @@ export class SignInModalComponent implements OnDestroy {
 
     this.subscription = this.modalService.modalOpened.subscribe(modalName => {
       if (modalName === this.MODAL_NAME) {
-        this.form.reset()
-        this.isOpen = true;
+        this.openModal();
       }
     });
 
@@ -53,18 +52,29 @@ export class SignInModalComponent implements OnDestroy {
         .pipe(first())
         .subscribe({
             next: () => {
-              this.isOpen = false;
+              this.closeModal();
             },
             error: error => {
+              console.log(error)
             }
         });
   }
 
   onModalCloseClick(): void {
-    this.isOpen = false;
+    this.closeModal();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  private openModal(): void {
+    this.form.reset();
+    this.isOpen = true;
+  }
+
+  private closeModal(): void {
+    this.isOpen = false;
+    this.modalService.closeModal(this.MODAL_NAME);
   }
 }

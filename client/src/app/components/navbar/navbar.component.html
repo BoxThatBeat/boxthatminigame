@@ -50,14 +50,26 @@
 
     <div class="navbar-end">
       <div class="navbar-item has-background-gun-metal">
-        <div class="buttons">
-          <a class="button is-primary" (click)="onCreateAccountClick()">
-            <strong>Create Account</strong>
-          </a>
-          <a class="button is-light" (click)="onSignInClick()">
-            Log in
+        
+        <div *ngIf="isSignedIn; else elseBlock" class="buttons">
+          <h2 class="has-text-primary pr-4">
+            {{currentUser.username}}
+          </h2>
+          <a class="button is-light" (click)="onSignOutClick()">
+            Log out
           </a>
         </div>
+        <ng-template #elseBlock>
+          <div class="buttons">
+            <a class="button is-primary" (click)="onCreateAccountClick()">
+              <strong>Create Account</strong>
+            </a>
+            <a class="button is-light" (click)="onSignInClick()">
+              Log in
+            </a>
+          </div>
+        </ng-template>
+
       </div>
     </div>
   </div>

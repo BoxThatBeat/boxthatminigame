@@ -11,12 +11,13 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class RegistrationModalComponent implements OnDestroy {
 
-  form: FormGroup
+  private MODAL_NAME: string = 'CreateAccount';
+
+  public form: FormGroup
   submitted = false;
 
   public isOpen:boolean = false;
   subscription: Subscription;
-  private MODAL_NAME: string = 'CreateAccount';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,8 +27,7 @@ export class RegistrationModalComponent implements OnDestroy {
 
   this.subscription = this.modalService.modalOpened.subscribe(modalName => {
     if (modalName === this.MODAL_NAME) {
-      this.form.reset()
-      this.isOpen = true;
+      this.openModal();
     }
   });
 
@@ -52,7 +52,17 @@ export class RegistrationModalComponent implements OnDestroy {
           .pipe(first())
           .subscribe({
               next: () => {
-                this.isOpen = false;
+                this.accountService.login(this.f['username'].value, this.f['password'].value)
+                  .pipe(first())
+                  .subscribe({
+                      next: () => {
+                        this.closeModal();
+                      },
+                      error: error => {
+                        console.log(error)
+                      }
+                  });
+                this.closeModal();
               },
               error: error => {
                   console.log(error)
@@ -61,10 +71,20 @@ export class RegistrationModalComponent implements OnDestroy {
   }
  
   onModalCloseClick(): void {
-    this.isOpen = false;
+    this.closeModal();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  private openModal(): void {
+    this.form.reset();
+    this.isOpen = true;
+  }
+
+  private closeModal(): void {
+    this.isOpen = false;
+    this.modalService.closeModal(this.MODAL_NAME);
   }
 }
