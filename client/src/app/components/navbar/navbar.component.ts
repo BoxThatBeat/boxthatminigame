@@ -15,16 +15,21 @@ export class NavbarComponent {
   public isOpen:boolean = false;
   public isSignedIn:boolean = false;
   public currentUser:User = new User;
-  subscription: Subscription;
+
+  switchUserEvent: Subscription;
 
   constructor(
     private modalService: ModalService,
     private accountService: AccountService) {
 
-      this.updateUser();
+      this.switchUserEvent = this.accountService.user.subscribe(newUser => {
+        this.currentUser = newUser;
 
-      this.subscription = this.modalService.modalClosed.subscribe(modalName => {
-        this.updateUser();
+        if (this.currentUser.username != null && this.currentUser.username != undefined && this.currentUser.username != '') {
+          this.isSignedIn = true;
+        } else {
+          this.isSignedIn = false;
+        }
       });
     }
 
@@ -42,17 +47,6 @@ export class NavbarComponent {
 
   onSignOutClick(): void {
     this.accountService.logout();
-    this.updateUser();
-  }
-
-  private updateUser(): void {
-    this.currentUser = this.accountService.userValue;
-
-    if (this.currentUser.username != null && this.currentUser.username != undefined && this.currentUser.username != '') {
-      this.isSignedIn = true;
-    } else {
-      this.isSignedIn = false;
-    }
   }
 
 }

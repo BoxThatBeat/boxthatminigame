@@ -52,8 +52,8 @@
       <div class="navbar-item has-background-gun-metal">
         
         <div *ngIf="isSignedIn; else elseBlock" class="buttons">
-          <h2 class="has-text-primary pr-4">
-            {{currentUser.username}}
+          <h2 class="has-text-sea-shell pr-4">
+            Logged in as:  {{currentUser.username | uppercase}}
           </h2>
           <a class="button is-light" (click)="onSignOutClick()">
             Log out
