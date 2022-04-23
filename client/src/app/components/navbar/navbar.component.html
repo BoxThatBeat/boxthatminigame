@@ -53,7 +53,7 @@
         
         <div *ngIf="isSignedIn; else elseBlock" class="buttons">
           <h2 class="has-text-sea-shell pr-4">
-            Logged in as:  {{currentUser.username | uppercase}}
+            Logged in as:  {{currentUser.username}}
           </h2>
           <a class="button is-light" (click)="onSignOutClick()">
             Log out

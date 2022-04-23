@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -11,6 +12,7 @@ export class AccountService {
     public user: Observable<User>;
 
     constructor(
+        private socket: Socket,
         private http: HttpClient
     ) {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')  || '{}'));
@@ -21,6 +23,7 @@ export class AccountService {
         return this.userSubject.value;
     }
 
+    /*
     login(username: any, password: any) {
         return this.http.post<User>(`${environment.socketUrl}/users/authenticate`, { username, password })
             .pipe(map(user => {
@@ -30,15 +33,12 @@ export class AccountService {
                 return user;
             }));
     }
+    */
 
     logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');
         this.userSubject.next(new User);
-    }
-
-    register(user: User) {
-        return this.http.post(`${environment.socketUrl}/users/register`, user);
     }
 
     getAll() {
@@ -74,5 +74,13 @@ export class AccountService {
                 }
                 return x;
             }));
+    }
+
+    register(user: User, callback: (response: any) => void) {
+      this.socket.emit('user:register', { payload: user }, callback);
+    }
+
+    login(username: any, password: any, callback: (response: any) => void) {
+      this.socket.emit('user:login', {payload: {'username':username, 'password':password}}, callback);
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, NgControlStatus, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first, Subscription } from 'rxjs';
 import { AccountService } from 'src/app/services/account.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -48,26 +48,16 @@ export class RegistrationModalComponent implements OnDestroy {
           return;
       }
 
-      this.accountService.register(this.form.value)
-          .pipe(first())
-          .subscribe({
-              next: () => {
-                this.accountService.login(this.f['username'].value, this.f['password'].value)
-                  .pipe(first())
-                  .subscribe({
-                      next: () => {
-                        this.closeModal();
-                      },
-                      error: error => {
-                        console.log(error)
-                      }
-                  });
-                this.closeModal();
-              },
-              error: error => {
-                  console.log(error)
-              }
+      this.accountService.register(this.form.value, (regResponse: any) => {
+        if (regResponse) {
+          
+          this.accountService.login(this.f['username'].value, this.f['password'].value, (loginResponse: any) => {
+            console.log(loginResponse);
           });
+          
+          this.closeModal();
+        }
+      });
   }
  
   onModalCloseClick(): void {

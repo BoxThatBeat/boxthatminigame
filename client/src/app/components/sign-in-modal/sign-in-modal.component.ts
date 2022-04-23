@@ -48,16 +48,11 @@ export class SignInModalComponent implements OnDestroy {
         return;
     }
 
-    this.accountService.login(this.f['username'].value, this.f['password'].value)
-        .pipe(first())
-        .subscribe({
-            next: () => {
-              this.closeModal();
-            },
-            error: error => {
-              console.log(error)
-            }
-        });
+    this.accountService.login(this.f['username'].value, this.f['password'].value, (response: any) : void => {
+      if (response) {
+        this.closeModal();
+      }
+    });
   }
 
   onModalCloseClick(): void {
