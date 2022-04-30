@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first, Subscription } from 'rxjs';
 import { AccountService } from 'src/app/services/account.service';
 import { ModalService } from 'src/app/services/modal.service';
+import { Response } from 'src/app/models/response.modal';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'registration-modal',
@@ -48,14 +50,23 @@ export class RegistrationModalComponent implements OnDestroy {
           return;
       }
 
-      this.accountService.register(this.form.value, (regResponse: any) => {
-        if (regResponse) {
-          
-          this.accountService.login(this.f['username'].value, this.f['password'].value, (loginResponse: any) => {
-            console.log(loginResponse);
+      const user = new User(this.f['username'].value, this.f['password'].value, '');
+
+      this.accountService.register(user, (regResponse: Response) => {
+
+        if (regResponse.isError) {
+          console.log(regResponse.message);
+        } else {
+
+          this.accountService.login(user, (response: Response) : void => {
+            if (response.isError) {
+              console.log(response.message);
+            } else {
+              
+              this.accountService.saveUser(user)
+              this.closeModal();
+            }
           });
-          
-          this.closeModal();
         }
       });
   }

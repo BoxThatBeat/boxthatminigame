@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first, Subscription } from 'rxjs';
 import { AccountService } from 'src/app/services/account.service';
 import { ModalService } from 'src/app/services/modal.service';
+import { Response } from 'src/app/models/response.modal';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'sign-in-modal',
@@ -48,8 +50,13 @@ export class SignInModalComponent implements OnDestroy {
         return;
     }
 
-    this.accountService.login(this.f['username'].value, this.f['password'].value, (response: any) : void => {
-      if (response) {
+    const user = new User(this.f['username'].value, this.f['password'].value, '');
+
+    this.accountService.login(user, (response: Response) : void => {
+      if (response.isError) {
+        console.log(response.message);
+      } else {
+        this.accountService.saveUser(user)
         this.closeModal();
       }
     });

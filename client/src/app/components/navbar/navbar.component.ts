@@ -14,7 +14,7 @@ export class NavbarComponent {
   // If true, menu opens on mobile, hamburger button becomes an X
   public isOpen:boolean = false;
   public isSignedIn:boolean = false;
-  public currentUser:User = new User;
+  public currentUser:User = new User();
 
   switchUserEvent: Subscription;
 

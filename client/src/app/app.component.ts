@@ -10,7 +10,7 @@ import { AccountService } from './services/account.service';
 export class AppComponent {
   
   title = 'BoxThatMiniGame';
-  user: User = new User;
+  user: User = new User();
 
     constructor(private accountService: AccountService) {
         this.accountService.user.subscribe(x => this.user = x);
