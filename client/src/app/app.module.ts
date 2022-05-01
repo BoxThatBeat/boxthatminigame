@@ -6,15 +6,19 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SidebarPlayersComponent } from './components/sidebar-players/sidebar-players.component';
-import { SidebarScoreboardComponent } from './components/sidebar-scoreboard/sidebar-scoreboard.component';
-import { SignInModalComponent } from './components/sign-in-modal/sign-in-modal.component';
-import { RegistrationModalComponent } from './components/registration-modal/registration-modal.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend';
-import { AlertBoxComponent } from './components/alert-box/alert-box.component';
+
+/* Components */
+import { NavbarComponent } from './components/menus/navbar/navbar.component';
+import { SidebarPlayersComponent } from './components/menus/sidebar-players/sidebar-players.component';
+import { SidebarScoreboardComponent } from './components/menus/sidebar-scoreboard/sidebar-scoreboard.component';
+import { SignInModalComponent } from './components/menus/sign-in-modal/sign-in-modal.component';
+import { RegistrationModalComponent } from './components/menus/registration-modal/registration-modal.component';
+import { AlertBoxComponent } from './components/menus/alert-box/alert-box.component';
+import { TimerComponent } from './components/counting_mania/timer/timer.component';
+import { GameContainerComponent } from './components/game-container/game-container.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -29,7 +33,9 @@ const config: SocketIoConfig = {
     SidebarScoreboardComponent,
     SignInModalComponent,
     RegistrationModalComponent,
-    AlertBoxComponent
+    AlertBoxComponent,
+    TimerComponent,
+    GameContainerComponent
 	],
 	imports: [
 		BrowserModule,
