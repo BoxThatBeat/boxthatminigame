@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user.model';
-import { first } from 'rxjs/operators';
 import { AccountService } from 'src/app/services/account.service';
-import { Subscription } from 'rxjs';
-import { DocumentService } from 'src/app/services/document.service';
+import { Response } from 'src/app/models/response.modal';
 
 @Component({
   selector: 'sidebar-players',
@@ -12,18 +9,21 @@ import { DocumentService } from 'src/app/services/document.service';
 })
 export class SidebarPlayersComponent implements OnInit {
 
-  users:User[] = [];
+  usernames:string[] = [];
 
-  constructor(private accountService: AccountService, private documentService: DocumentService) {
+  constructor(private accountService: AccountService) {
   }
 
     ngOnInit() {
-      /*
-        this.accountService.getAll()
-            .pipe(first())
-            .subscribe(users => this.users = users.filter(value => 
-              value.username != this.accountService.userValue.username));
-              */
+      const currentUsername = this.accountService.userValue.username;
+      this.accountService.getAllUsernames((response: Response) => {
+        if (response.isError) {
+          console.log(response.message)
+        } else {
+          this.usernames = response.message.filter((username: string) =>
+            username != currentUsername);
+        }
+      });
     }
 
 }

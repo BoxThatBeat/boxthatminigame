@@ -7,10 +7,10 @@
       <input class="input" type="text" placeholder="Search">
     </p>
   </div>
-  <div *ngFor="let user of users">
+  <div *ngFor="let username of usernames">
     <a class="panel-block is-active">
       <!--TODO: add online vs in game circle (green or orange)-->
-      {{user.username}}
+      {{username}}
     </a>
   </div>
   <a class="panel-block is-active">

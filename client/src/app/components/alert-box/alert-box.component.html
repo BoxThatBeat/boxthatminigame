@@ -1,0 +1,9 @@
+<article *ngIf="message" [ngClass]="message.cssClass" class="message">
+  <div class="message-header">
+    {{message.header}}
+    <button class="delete" aria-label="delete" (click)="onMessageCloseClick()"></button>
+  </div>
+  <div class="message-body">
+    {{message.text}}
+  </div>
+</article>

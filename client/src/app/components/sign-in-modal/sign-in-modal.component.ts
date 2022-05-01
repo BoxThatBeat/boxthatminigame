@@ -5,6 +5,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { Response } from 'src/app/models/response.modal';
 import { User } from 'src/app/models/user.model';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'sign-in-modal',
@@ -24,8 +25,8 @@ export class SignInModalComponent implements OnDestroy {
   constructor(
     private modalService: ModalService,
     private formBuilder: FormBuilder,
-    private accountService: AccountService
-) { 
+    private accountService: AccountService,
+    private alertService: AlertService) { 
 
     this.subscription = this.modalService.modalOpened.subscribe(modalName => {
       if (modalName === this.MODAL_NAME) {
@@ -54,7 +55,7 @@ export class SignInModalComponent implements OnDestroy {
 
     this.accountService.login(user, (response: Response) : void => {
       if (response.isError) {
-        console.log(response.message);
+        this.alertService.error(response.message);
       } else {
         this.accountService.saveUser(user)
         this.closeModal();
@@ -77,6 +78,7 @@ export class SignInModalComponent implements OnDestroy {
 
   private closeModal(): void {
     this.isOpen = false;
+    this.alertService.clear();
     this.modalService.closeModal(this.MODAL_NAME);
   }
 }

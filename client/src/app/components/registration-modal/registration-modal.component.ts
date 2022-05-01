@@ -5,6 +5,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { Response } from 'src/app/models/response.modal';
 import { User } from 'src/app/models/user.model';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'registration-modal',
@@ -24,8 +25,8 @@ export class RegistrationModalComponent implements OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private modalService: ModalService
-) { 
+    private modalService: ModalService,
+    private alertService: AlertService) { 
 
   this.subscription = this.modalService.modalOpened.subscribe(modalName => {
     if (modalName === this.MODAL_NAME) {
@@ -55,12 +56,12 @@ export class RegistrationModalComponent implements OnDestroy {
       this.accountService.register(user, (regResponse: Response) => {
 
         if (regResponse.isError) {
-          console.log(regResponse.message);
+          this.alertService.error(regResponse.message);
         } else {
 
           this.accountService.login(user, (response: Response) : void => {
             if (response.isError) {
-              console.log(response.message);
+              this.alertService.error(response.message);
             } else {
               
               this.accountService.saveUser(user)
@@ -86,6 +87,7 @@ export class RegistrationModalComponent implements OnDestroy {
 
   private closeModal(): void {
     this.isOpen = false;
+    this.alertService.clear();
     this.modalService.closeModal(this.MODAL_NAME);
   }
 }

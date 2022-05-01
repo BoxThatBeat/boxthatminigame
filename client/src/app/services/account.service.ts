@@ -20,6 +20,10 @@ export class AccountService {
         return this.userSubject.value;
     }
 
+    getAllUsernames(callback: (response: Response) => void) {
+      this.socket.emit('user:allusers', callback);
+    }
+
     register(user: User, callback: (response: Response) => void) {
       this.socket.emit('user:register', { payload: user }, callback);
     }

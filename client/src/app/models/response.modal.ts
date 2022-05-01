@@ -1,4 +1,4 @@
 export class Response {
-  message: string = ''
+  message: any = ''
   isError: boolean = false;
 }

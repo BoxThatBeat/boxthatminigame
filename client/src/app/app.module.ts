@@ -14,6 +14,7 @@ import { RegistrationModalComponent } from './components/registration-modal/regi
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { fakeBackendProvider } from './_helpers/fake-backend';
+import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -27,7 +28,8 @@ const config: SocketIoConfig = {
     SidebarPlayersComponent,
     SidebarScoreboardComponent,
     SignInModalComponent,
-    RegistrationModalComponent
+    RegistrationModalComponent,
+    AlertBoxComponent
 	],
 	imports: [
 		BrowserModule,
