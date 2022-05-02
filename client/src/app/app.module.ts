@@ -18,7 +18,8 @@ import { SignInModalComponent } from './components/menus/sign-in-modal/sign-in-m
 import { RegistrationModalComponent } from './components/menus/registration-modal/registration-modal.component';
 import { AlertBoxComponent } from './components/menus/alert-box/alert-box.component';
 import { TimerComponent } from './components/counting_mania/timer/timer.component';
-import { GameContainerComponent } from './components/game-container/game-container.component';
+import { GameContainerComponent } from './components/menus/game-container/game-container.component';
+import { CountingManiaComponent } from './components/counting_mania/counting-mania/counting-mania.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -35,7 +36,8 @@ const config: SocketIoConfig = {
     RegistrationModalComponent,
     AlertBoxComponent,
     TimerComponent,
-    GameContainerComponent
+    GameContainerComponent,
+    CountingManiaComponent
 	],
 	imports: [
 		BrowserModule,
