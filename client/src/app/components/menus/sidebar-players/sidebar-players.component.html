@@ -8,11 +8,20 @@
     </p>
   </div>
   <div *ngFor="let username of usernames">
-    <a class="panel-block is-active">
-      <!--TODO: add online vs in game circle (green or orange)-->
-      {{username}}
-    </a>
+    <ul class="menu-list">
+      <li>
+        <a [ngClass]="{'has-background-english-lavendar has-text-sea-shell': username === selectedUser}"
+           (click)="onUserSelect(username)" >{{username}}</a>
+        <ul *ngIf="username == selectedUser">
+          <li><a>Invite to game</a></li>
+          <li><a>Profile</a></li>
+        </ul>
+      </li>
+    </ul>
   </div>
+
+
+
   <a class="panel-block is-active">
     <!--TODO: add online vs in game circle (green or orange)-->
     Warsna - Online

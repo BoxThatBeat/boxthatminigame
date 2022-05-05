@@ -9,6 +9,7 @@ import { Response } from 'src/app/models/response.modal';
 })
 export class SidebarPlayersComponent implements OnInit {
 
+  selectedUser:string = '';
   usernames:string[] = [];
 
   constructor(private accountService: AccountService) {
@@ -24,6 +25,14 @@ export class SidebarPlayersComponent implements OnInit {
             username != currentUsername);
         }
       });
+    }
+
+    onUserSelect(username: string) {
+      if (this.selectedUser === username) {
+        this.selectedUser = '';
+      } else {
+        this.selectedUser = username;
+      }
     }
 
 }

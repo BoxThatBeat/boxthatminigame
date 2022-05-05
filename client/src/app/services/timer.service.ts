@@ -9,16 +9,35 @@ export class TimerService {
   public totalMilliseconds = new BehaviorSubject<number>(0);
   public elapsedMilliseconds = new BehaviorSubject<number>(0);
 
-  constructor() {
+  private totalMsIntervalId: any;
+
+  constructor() {}
+
+  public startTimer(): void {
     var since = new Date();
     var now = new Date();
-
-    // Assuming you count every 1/100th of a second
-    setInterval(() => {
+    this.totalMsIntervalId = setInterval(() => {
       now = new Date();
-      this.totalMilliseconds.next(now.getTime() - since.getTime());
-    }, 10)
-   }
+      this.elapsedMilliseconds.next(now.getTime() - since.getTime());
+    }, 1)
+  }
+
+  public pauseTimer(): void {
+    clearInterval(this.totalMsIntervalId);
+  }
+
+  public continueTimer(): void {
+
+  }
+
+  public resetTimer(): void {
+
+  }
+
+  public addElapsedToTotal(): void {
+    this.totalMilliseconds.next(this.totalMilliseconds.getValue() + this.elapsedMilliseconds.getValue());
+    this.elapsedMilliseconds.next(0);
+  }
 
   getTotalMilliseconds(): Observable<any> {
     return this.totalMilliseconds.asObservable();
@@ -26,10 +45,5 @@ export class TimerService {
 
   getElapsedMilliseconds(): Observable<any> {
     return this.elapsedMilliseconds.asObservable();
-  }
-
-  updateTotalCounter(): void {
-    this.totalMilliseconds.next(this.totalMilliseconds.getValue() + this.elapsedMilliseconds.getValue());
-    this.elapsedMilliseconds.next(0);
   }
 }

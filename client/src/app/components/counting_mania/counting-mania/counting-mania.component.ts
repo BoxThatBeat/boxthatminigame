@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
   selector: 'counting-mania',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CountingManiaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private timerService: TimerService) { }
 
   ngOnInit(): void {
   }
 
+  onStartTimer() {
+    this.timerService.startTimer();
+  }
+
+  onPauseTimer() {
+    this.timerService.pauseTimer();
+  }
+
+  onAddToTotal() {
+    this.timerService.addElapsedToTotal();
+  }
 }
