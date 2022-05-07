@@ -1,4 +1,4 @@
-module.exports = (io, User, Response) => {
+module.exports = (socket, io, localStorage, User, Response) => {
 
   const register = async function (request, callback) {
 
@@ -25,9 +25,16 @@ module.exports = (io, User, Response) => {
     if (user === null) {
       callback(new Response('Incorrect user or password.', true));
     } else {
+      localStorage.socketIdUsernames.set(user.username, socket.id);
       callback(new Response('User login succesful ' + user, false));
+      io.emit('otheruser:login', user.username);
     }
   };
+
+  const logout = function(request) {
+    localStorage.socketIdUsernames.delete(request.payload.username);
+    io.emit('otheruser:logout', request.payload.username);
+  }
 
   const getUsernames = async function (callback) {
 
@@ -41,9 +48,18 @@ module.exports = (io, User, Response) => {
     callback(new Response('No users registered', true));
   }
 
+  const getOnlineUsernames = function (callback) {
+
+    var onlineUserames = Object.keys(localStorage.socketIdUsernames.all());
+
+    callback(new Response(onlineUserames, false));
+  }
+
   return {
     register,
     login,
-    getUsernames
+    logout,
+    getUsernames,
+    getOnlineUsernames
   }
 }

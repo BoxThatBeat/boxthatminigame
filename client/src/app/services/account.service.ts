@@ -19,10 +19,15 @@ export class AccountService {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')  || '{}'));
         this.user = this.userSubject.asObservable();
 
-        socket.on("otheruser:login", (username:string) => {
+        // When our socket has connected to the server it will ask us if we are signed in to associate the new socketId to username
+        socket.on('connection:new', (serverCallback: (currentUsername: string) => void) => {
+          serverCallback(this.userSubject.value.username);
+        });
+
+        socket.on("otheruser:login", (username: string) => {
           this.otherUserLoginEvent.emit(username);
         });
-        socket.on("otheruser:logout", (username:string) => {
+        socket.on("otheruser:logout", (username: string) => {
           this.otherUserLogoutEvent.emit(username);
         });
     }
@@ -31,20 +36,20 @@ export class AccountService {
         return this.userSubject.value;
     }
 
-    getOnlineUsernames(callback: (response: Response) => void) {
-      this.socket.emit('user:onlineusers', callback);
+    getOnlineUsernames(clientCallback: (response: Response) => void) {
+      this.socket.emit('user:onlineusers', clientCallback);
     }
 
-    getAllUsernames(callback: (response: Response) => void) {
-      this.socket.emit('user:allusers', callback);
+    getAllUsernames(clientCallback: (response: Response) => void) {
+      this.socket.emit('user:allusers', clientCallback);
     }
 
-    register(user: User, callback: (response: Response) => void) {
-      this.socket.emit('user:register', { payload: user }, callback);
+    register(user: User, clientCallback: (response: Response) => void) {
+      this.socket.emit('user:register', { payload: user }, clientCallback);
     }
 
-    login(user: User, callback: (response: Response) => void) {
-      this.socket.emit('user:login', {payload: user}, callback);
+    login(user: User, clientCallback: (response: Response) => void) {
+      this.socket.emit('user:login', {payload: user}, clientCallback);
     }
 
     logout(user: User): void {

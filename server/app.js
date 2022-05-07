@@ -69,13 +69,16 @@ const io = require("socket.io")(server, {
 const Response = require('./models/Response');
 const User = require('./models/user')(db.sequelize, Sequelize.DataTypes, Sequelize.Model);
 
-/**
- * Socket handlers
- */
- const { register, login, getUsernames } = require("./socket_controllers/userController")(io, User, Response)
-
+const localStorage = require('./localStorage');
 const documents = {};
 io.on("connection", socket => {
+
+  /**
+ * Socket handlers
+ */
+ const { register, login, logout, getUsernames, getOnlineUsernames } = require("./socket_controllers/userController")(socket, io, localStorage, User, Response)
+ const { invite } = require("./socket_controllers/gameController")(socket, localStorage, User, Response)
+
   let previousId;
 
   const safeJoin = currentId => {
@@ -84,9 +87,20 @@ io.on("connection", socket => {
     previousId = currentId;
   };
 
+  // Ask client if they are signed in and update username to use new socketId
+  socket.emit('connection:new', (username) => {
+    if (username != null) {
+      localStorage.socketIdUsernames.delete(username);
+      localStorage.socketIdUsernames.set(username, socket.id);
+    }
+  });
   socket.on("user:register", register);
   socket.on("user:login", login);
+  socket.on("user:logout", logout);
   socket.on('user:allusers', getUsernames);
+  socket.on('user:onlineusers', getOnlineUsernames);
+
+  socket.on('game:inviteuser', invite);
 
   /*
   socket.on("disconnecting", (reason) => {

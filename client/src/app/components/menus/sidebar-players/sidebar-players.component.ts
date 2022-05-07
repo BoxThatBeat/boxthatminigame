@@ -66,6 +66,7 @@ export class SidebarPlayersComponent implements OnInit {
       this.users.forEach( (user: SidebarUser) => {
         if (user.username === usernameLoggedOff) {
           user.isOnline = false;
+          user.isSelected = false;
         }
       });
     });
