@@ -46,7 +46,7 @@ export class NavbarComponent {
   }
 
   onSignOutClick(): void {
-    this.accountService.logout();
+    this.accountService.logout(this.currentUser);
   }
 
 }

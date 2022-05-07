@@ -38,12 +38,4 @@ export class TimerService {
     this.totalMilliseconds.next(this.totalMilliseconds.getValue() + this.elapsedMilliseconds.getValue());
     this.elapsedMilliseconds.next(0);
   }
-
-  getTotalMilliseconds(): Observable<any> {
-    return this.totalMilliseconds.asObservable();
-  }
-
-  getElapsedMilliseconds(): Observable<any> {
-    return this.elapsedMilliseconds.asObservable();
-  }
 }

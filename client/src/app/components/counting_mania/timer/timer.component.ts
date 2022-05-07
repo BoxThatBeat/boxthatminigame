@@ -22,18 +22,6 @@ export class TimerComponent implements OnInit {
     });
   }
 
-  private getMinutes(milliseconds:number) {
-    return Math.round((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
-  }
-
-  private getSeconds(milliseconds:number) {
-    return Math.round( ((milliseconds % (1000 * 60 * 60)) % (1000 * 60) / 1000) );
-  }
-
-  private getMilliseconds(milliseconds:number) {
-    return Math.round( ((milliseconds % (1000 * 60 * 60)) % (1000 * 60)) );
-  }
-
   private msToTimerString(ms:number) {
     const divmod = (x: number, y: number) => [Math.floor(x / y), x % y];
     var seconds = 0;

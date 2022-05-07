@@ -7,39 +7,27 @@
       <input class="input" type="text" placeholder="Search">
     </p>
   </div>
-  <div *ngFor="let username of usernames">
+  <div *ngFor="let user of users">
     <ul class="menu-list">
       <li>
-        <a [ngClass]="{'has-background-english-lavendar has-text-sea-shell': username === selectedUser}"
-           (click)="onUserSelect(username)" >{{username}}</a>
-        <ul *ngIf="username == selectedUser">
-          <li><a>Invite to game</a></li>
-          <li><a>Profile</a></li>
-        </ul>
+        <div *ngIf="user.isOnline; else offLine">
+          <a [ngClass]="{'has-background-english-lavendar has-text-sea-shell': user.isSelected}"
+           (click)="onUserSelect(user.username)">{{user.username}} - Online <span *ngIf="user.isInviter"> (1)</span></a>
+          <ul *ngIf="user.isSelected && user.isInviter">
+            <li (click)="onInviteUser(user.username)"><a>Join Game</a></li>
+            <li><a>Profile</a></li>
+          </ul>
+          <ul *ngIf="user.isSelected && !user.isInviter">
+            <li (click)="onInviteUser(user.username)"><a>Invite to game</a></li>
+            <li><a>Profile</a></li>
+          </ul>
+        </div>
+        <ng-template #offLine>
+          <a>{{user.username}} - Offline</a>
+        </ng-template>
       </li>
     </ul>
   </div>
-
-
-
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  <a class="panel-block is-active">
-    BoxThatBeat - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Esulu - Ingame
-  </a>
-  <a class="panel-block is-active">
-    Yawnzy - Online
-  </a>
-  <a class="panel-block is-active">
-    <!--TODO: add online vs in game circle (green or orange)-->
-    Warsna - Online
-  </a>
-  
   <div class="panel-block">
     <button class="button is-link is-outlined is-fullwidth">
       Reset all filters
