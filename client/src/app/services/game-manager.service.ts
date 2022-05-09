@@ -1,5 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { Response } from '../models/response.modal';
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +8,37 @@ import { Socket } from 'ngx-socket-io';
 export class GameManagerService {
 
   invitedEvent: EventEmitter<string> = new EventEmitter();
+  joinedEvent: EventEmitter<Array<string>> = new EventEmitter();
+
+  gameId: string = '';
 
   constructor(private socket: Socket) { 
-    socket.on("game:invited", (inviter:string) => {
-      console.log("I was invited to play by:" + inviter);
-      this.invitedEvent.emit(inviter);
+    socket.on("game:invited", (response:Response) => {
+
+      if (response.isError) {
+        console.log(response.message);
+      } else {
+        this.invitedEvent.emit(response.message.inviter);
+      }
+    });
+
+    socket.on("game:joined", (response:Response) => {
+
+      if (response.isError) {
+        console.log(response.message);
+      } else {
+        this.gameId = response.message.gameId;
+        this.joinedEvent.emit(response.message.usernames);
+      }
     });
   }
 
   inviteUser(inviter: string, invited: string) {
-    this.socket.emit('game:inviteuser', { payload: {'inviter': inviter, 'invited': invited} });
+    this.socket.emit('game:inviteuser', { payload: {'inviter': inviter, 'invited': invited}});
+  }
+
+  joinUser(accepter: string, inviter: string) {
+    this.socket.emit('game:joinuser', { payload: {'accepter': accepter, 'inviter': inviter}});
   }
 
   /*

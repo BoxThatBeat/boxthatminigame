@@ -13,6 +13,7 @@ $opal: #AEC2B4;
 $sea-shell: #FFF4EE;
 $english-lavendar: #AE8187;
 $beige-lighter: #EFF0EB;
+$lime: #8cd966;
 
 // Inverted brand colors
 $gun-metal-invert: findColorInvert($gun-metal);
@@ -20,13 +21,14 @@ $opal-invert: findColorInvert($opal);
 $sea-shell-invert: findColorInvert($sea-shell);
 $english-lavendar-invert: findColorInvert($english-lavendar);
 $beige-lighter-invert: findColorInvert($beige-lighter);
-
+$lime-invert: findColorInvert($lime);
 
 $custom-colors: ("gun-metal": ($gun-metal, $gun-metal-invert), 
                  "opal": ($opal, $opal-invert),
                  "sea-shell": ($sea-shell, $sea-shell-invert),
                  "english-lavendar": ($english-lavendar, $english-lavendar-invert),
-                 "beige-lighter": ($beige-lighter, $beige-lighter-invert),);
+                 "beige-lighter": ($beige-lighter, $beige-lighter-invert),
+                 "lime": ($lime, $lime-invert));
 
 
 // Update Bulma's global variables

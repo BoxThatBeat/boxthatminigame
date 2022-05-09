@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentService } from 'src/app/services/document.service';
 
 @Component({
   selector: 'sidebar-scoreboard',
@@ -8,7 +7,7 @@ import { DocumentService } from 'src/app/services/document.service';
 })
 export class SidebarScoreboardComponent implements OnInit {
 
-  constructor(private documentService: DocumentService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

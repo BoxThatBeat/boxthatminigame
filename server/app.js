@@ -35,7 +35,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
+// Initialize SQL Database
 const db = require("./sequelize_init");
 db.sequelize.authenticate()
   .then(() => {
@@ -59,6 +59,8 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
+
+// Initialize SocketIO and setup listenners and emitters
 const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:4200",
@@ -70,15 +72,16 @@ const Response = require('./models/Response');
 const User = require('./models/user')(db.sequelize, Sequelize.DataTypes, Sequelize.Model);
 
 const localStorage = require('./localStorage');
-const documents = {};
+
 io.on("connection", socket => {
 
   /**
  * Socket handlers
  */
  const { register, login, logout, getUsernames, getOnlineUsernames } = require("./socket_controllers/userController")(socket, io, localStorage, User, Response)
- const { invite } = require("./socket_controllers/gameController")(socket, localStorage, User, Response)
+ const { inviteUser, joinUser } = require("./socket_controllers/gameController")(socket, io, localStorage, User, Response)
 
+ /*
   let previousId;
 
   const safeJoin = currentId => {
@@ -86,6 +89,7 @@ io.on("connection", socket => {
     socket.join(currentId, () => console.log(`Socket ${socket.id} joined room ${currentId}`));
     previousId = currentId;
   };
+  */
 
   // Ask client if they are signed in and update username to use new socketId
   socket.emit('connection:new', (username) => {
@@ -94,13 +98,16 @@ io.on("connection", socket => {
       localStorage.socketIdUsernames.set(username, socket.id);
     }
   });
+
+  // Listenners
   socket.on("user:register", register);
   socket.on("user:login", login);
   socket.on("user:logout", logout);
   socket.on('user:allusers', getUsernames);
   socket.on('user:onlineusers', getOnlineUsernames);
 
-  socket.on('game:inviteuser', invite);
+  socket.on('game:inviteuser', inviteUser);
+  socket.on('game:joinuser', joinUser);
 
   /*
   socket.on("disconnecting", (reason) => {
@@ -111,27 +118,6 @@ io.on("connection", socket => {
     }
   });
 */
-
-  socket.on("getDoc", docId => {
-    safeJoin(docId);
-    socket.emit("document", documents[docId]);
-  });
-
-  socket.on("addDoc", doc => {
-    documents[doc.id] = doc;
-    safeJoin(doc.id);
-    io.emit("documents", Object.keys(documents));
-    socket.emit("document", doc);
-  });
-
-  socket.on("editDoc", doc => {
-    documents[doc.id] = doc;
-    socket.to(doc.id).emit("document", doc);
-  });
-
-  io.emit("documents", Object.keys(documents));
-
-  console.log(`Socket ${socket.id} has connected`);
 });
 
 

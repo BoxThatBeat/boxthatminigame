@@ -44,12 +44,38 @@ export class SidebarPlayersComponent implements OnInit {
 
 
     // Subscribe to event that we are invited to play by another user
-    this.gameManagerService.invitedEvent.subscribe((inviterUsername: string) => {
+    this.gameManagerService.invitedEvent.subscribe( (inviterUsername: string) => {
       this.users.forEach( (user: SidebarUser) => {
         if (user.username === inviterUsername) {
           user.isInviter = true;
         }
       });
+      this.sortSidebarUsers();
+    });
+
+    // Subscribe to event that we joined a room with another user (initiated by this user or another)
+    this.gameManagerService.joinedEvent.subscribe( (usernames: Array<string>) => { 
+      
+      var currentUser: string = this.accountService.userValue.username;
+      var otherUser: string = '';
+
+      if (usernames.length > 0) {
+        if (usernames[0] === currentUser) {
+          otherUser = usernames[1];
+        } else {
+          otherUser = usernames[0];
+        }
+      }
+      
+      // Clear selected and invite of user joined
+      this.users.forEach( (user: SidebarUser) => {
+        user.isSelected = false;
+
+        if (user.username === otherUser) {
+          user.isInviter = false;
+        }
+      });
+      this.sortSidebarUsers();
     });
 
     // Subscribe to event that another user has logged on
@@ -59,6 +85,7 @@ export class SidebarPlayersComponent implements OnInit {
           user.isOnline = true;
         }
       });
+      this.sortSidebarUsers();
     });
 
     // Subscribe to event that another user has logged off
@@ -69,6 +96,7 @@ export class SidebarPlayersComponent implements OnInit {
           user.isSelected = false;
         }
       });
+      this.sortSidebarUsers();
     });
   }
 
@@ -82,6 +110,19 @@ export class SidebarPlayersComponent implements OnInit {
     }
 
     this.users = sidebarUsers;
+    this.sortSidebarUsers();
+  }
+
+  private sortSidebarUsers() {
+    this.users.sort(function(x,y) { 
+      if (x.isInviter && y.isInviter) return 0;
+      if (x.isInviter && !y.isInviter) return -1;
+      if (!x.isInviter && y.isInviter) return 1;
+      if (x.isOnline && y.isOnline) return 0;
+      if (x.isOnline && !y.isOnline) return -1;
+      if (!x.isOnline && y.isOnline) return 1;
+      return 0;
+    });
   }
 
   onUserSelect(newUsernameSelection: string) {
@@ -102,10 +143,18 @@ export class SidebarPlayersComponent implements OnInit {
         previouslySelectedUser.isSelected = false;
       }
     });
+
+    this.sortSidebarUsers();
   }
 
   onInviteUser(invitedUsername: string) {
     this.gameManagerService.inviteUser(this.accountService.userValue.username, invitedUsername);
   }
+  
+  onJoinGame(usernameToJoin: string) {
+    this.gameManagerService.joinUser(this.accountService.userValue.username, usernameToJoin);
+  }
+
+  //onLeaveGame()
 
 }

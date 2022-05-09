@@ -12,9 +12,9 @@
       <li>
         <div *ngIf="user.isOnline; else offLine">
           <a [ngClass]="{'has-background-english-lavendar has-text-sea-shell': user.isSelected}"
-           (click)="onUserSelect(user.username)">{{user.username}} - Online <span *ngIf="user.isInviter"> (1)</span></a>
+           (click)="onUserSelect(user.username)">{{user.username}} - Online <span *ngIf="user.isInviter" class="has-text-lime"> (1)</span></a>
           <ul *ngIf="user.isSelected && user.isInviter">
-            <li (click)="onInviteUser(user.username)"><a>Join Game</a></li>
+            <li (click)="onJoinGame(user.username)"><a>Join Game</a></li>
             <li><a>Profile</a></li>
           </ul>
           <ul *ngIf="user.isSelected && !user.isInviter">

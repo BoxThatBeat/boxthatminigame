@@ -20,6 +20,7 @@ import { AlertBoxComponent } from './components/menus/alert-box/alert-box.compon
 import { TimerComponent } from './components/counting_mania/timer/timer.component';
 import { GameContainerComponent } from './components/menus/game-container/game-container.component';
 import { CountingManiaComponent } from './components/counting_mania/counting-mania/counting-mania.component';
+import { BannerComponent } from './components/menus/banner/banner.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -37,7 +38,8 @@ const config: SocketIoConfig = {
     AlertBoxComponent,
     TimerComponent,
     GameContainerComponent,
-    CountingManiaComponent
+    CountingManiaComponent,
+    BannerComponent
 	],
 	imports: [
 		BrowserModule,
