@@ -13,6 +13,8 @@ export class AccountService {
     otherUserLoginEvent: EventEmitter<string> = new EventEmitter();
     otherUserLogoutEvent: EventEmitter<string> = new EventEmitter();
 
+    signedInEvent: EventEmitter<string> = new EventEmitter();
+
     constructor(
         private socket: Socket
     ) {
@@ -49,6 +51,7 @@ export class AccountService {
     }
 
     login(user: User, clientCallback: (response: Response) => void) {
+      this.signedInEvent.emit(user.username);
       this.socket.emit('user:login', {payload: user}, clientCallback);
     }
 

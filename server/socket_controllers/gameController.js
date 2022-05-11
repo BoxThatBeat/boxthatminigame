@@ -40,6 +40,10 @@ module.exports = (socket, io, localStorage, User, Response) => {
 
     io.to(roomId).emit('game:joined', new Response({'usernames': users}, false));
   }
+
+  const leaveGame = function(request) {
+    
+  }
   
   return {
     inviteUser,

@@ -42,6 +42,12 @@ export class SidebarPlayersComponent implements OnInit {
       }
     });
 
+    // Subscribe to event that user just signed in
+    this.accountService.signedInEvent.subscribe( (newUsername: string) => {
+      this.users = this.users.filter((user: SidebarUser) =>
+      user.username != newUsername);
+    });
+
 
     // Subscribe to event that we are invited to play by another user
     this.gameManagerService.invitedEvent.subscribe( (inviterUsername: string) => {
