@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,16 +26,11 @@ export class TimerService {
     clearInterval(this.totalMsIntervalId);
   }
 
-  public continueTimer(): void {
-
-  }
-
   public resetTimer(): void {
-
+    this.elapsedMilliseconds.next(0);
   }
 
   public addElapsedToTotal(): void {
     this.totalMilliseconds.next(this.totalMilliseconds.getValue() + this.elapsedMilliseconds.getValue());
-    this.elapsedMilliseconds.next(0);
   }
 }

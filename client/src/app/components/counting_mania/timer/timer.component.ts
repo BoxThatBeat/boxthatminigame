@@ -22,18 +22,19 @@ export class TimerComponent implements OnInit {
     });
   }
 
+  private divmod = (x: number, y: number) => [Math.floor(x / y), x % y];
+
   private msToTimerString(ms:number) {
-    const divmod = (x: number, y: number) => [Math.floor(x / y), x % y];
     var seconds = 0;
     var milliseconds = 0;
     var minutes = 0;
     var result = [];
     
-    result = divmod(ms, 1000);
+    result = this.divmod(ms, 1000);
     seconds = result[0];
     milliseconds = result[1];
 
-    result = divmod(seconds, 60);
+    result = this.divmod(seconds, 60);
     minutes = result[0];
     seconds = result[1];
 

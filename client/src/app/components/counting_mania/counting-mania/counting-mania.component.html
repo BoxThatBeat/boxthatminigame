@@ -1,20 +1,14 @@
 <timer></timer>
+<div class="divider">Your numbers are red</div>
+<number-display [values]="currentCount"></number-display>
 
 <div class="card">
-  <div class="card-content">
+  <div class="card-content has-background-beige-lighter">
     <div class="content">
-      <div class="field">
-        <label class="label has-text-centered" for="countnum">Input</label>
-        <div class="control">
-          <input type="text" formControlName="countnum" class="input is-gun-metal"/>
-        </div>
-      </div>
+      <label class="label has-text-centered">{{instructions}}</label>
+      <input type="text" [(ngModel)]="gameInput" (keyup.enter)="onSubmit()" class="input is-gun-metal"/>
     </div>
   </div>
 </div>
 
-
-<button (click)="onStartTimer()">Start Timer</button>
-<button (click)="onPauseTimer()">Pause Timer</button>
-<button (click)="onAddToTotal()">Add to total</button>
 

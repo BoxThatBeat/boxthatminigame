@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { TimerComponent } from './components/counting_mania/timer/timer.componen
 import { GameContainerComponent } from './components/menus/game-container/game-container.component';
 import { CountingManiaComponent } from './components/counting_mania/counting-mania/counting-mania.component';
 import { BannerComponent } from './components/menus/banner/banner.component';
+import { NumberDisplayComponent } from './components/counting_mania/number-display/number-display.component';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -39,10 +41,12 @@ const config: SocketIoConfig = {
     TimerComponent,
     GameContainerComponent,
     CountingManiaComponent,
-    BannerComponent
+    BannerComponent,
+    NumberDisplayComponent
 	],
 	imports: [
 		BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     CommonModule,
     HttpClientModule,

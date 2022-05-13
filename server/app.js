@@ -78,8 +78,9 @@ io.on("connection", socket => {
   /**
  * Socket handlers
  */
- const { register, login, logout, getUsernames, getOnlineUsernames } = require("./socket_controllers/userController")(socket, io, localStorage, User, Response)
- const { inviteUser, joinUser } = require("./socket_controllers/gameController")(socket, io, localStorage, User, Response)
+ const { register, login, logout, getUsernames, getOnlineUsernames } = require("./socket_controllers/userController")(socket, io, localStorage, User, Response);
+ const { inviteUser, joinUser } = require("./socket_controllers/gameController")(socket, io, localStorage, User, Response);
+ const { transferInput } = require("./socket_controllers/countingManiaController")(socket, io, localStorage, User, Response);
 
  /*
   let previousId;
@@ -108,6 +109,8 @@ io.on("connection", socket => {
 
   socket.on('game:inviteuser', inviteUser);
   socket.on('game:joinuser', joinUser);
+
+  socket.on('countingmania:sendInput', transferInput);
 
   /*
   socket.on("disconnecting", (reason) => {

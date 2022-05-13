@@ -20,7 +20,7 @@ module.exports = (socket, io, localStorage, User, Response) => {
     var roomId = uuid();
 
     // add both socketIds to list associated with room
-    localStorage.rooms.set(roomId, [socket.id, inviterSocketId]);
+    //localStorage.rooms.set(roomId, [socket.id, inviterSocketId]);
 
     var users = [request.payload.inviter, request.payload.accepter];
 

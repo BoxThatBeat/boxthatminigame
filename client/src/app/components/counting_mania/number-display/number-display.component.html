@@ -1,0 +1,29 @@
+<div class="container">
+  <div *ngIf="values[values.length - 3] != undefined; else noThirdNumber">
+    <p *ngIf="values[values.length - 3].num >= 0" [ngClass]="{'has-text-english-lavendar': values[values.length - 3].isMyNum }" class="has-text-centered is-size-6 has-text-english-lavendar">
+      {{values[values.length - 3].num}}
+    </p>
+  </div>
+  <ng-template #noThirdNumber>
+    <p> </p>
+  </ng-template>
+
+  <div *ngIf="values[values.length - 2] != undefined; else noSecondNumber">
+    <p *ngIf="values[values.length - 2].num >= 0" [ngClass]="{'has-text-english-lavendar': values[values.length - 2].isMyNum }" class="has-text-centered is-size-4 has-text-gun-metal">
+      {{values[values.length - 2].num}}
+    </p>
+  </div>
+  <ng-template #noSecondNumber>
+    <p> </p>
+  </ng-template>
+
+  <div *ngIf="values[values.length - 1] != undefined; else noSecondNumber">
+    <p [ngClass]="{'has-text-english-lavendar': values[values.length - 1].isMyNum }" class="has-text-centered is-size-1">
+      {{values[values.length - 1].num}}
+    </p>
+  </div>
+  <ng-template #noSecondNumber>
+    <p> </p>
+  </ng-template>
+  
+</div>
