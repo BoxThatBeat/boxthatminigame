@@ -27,7 +27,7 @@ exports.socketIdUsernames = socketIdUsernames = {
 };
 
 // { uuid1: [socketId1, socketId2], uuid2: [socketId1, socketId2] }
-exports.rooms = rooms = {
+/*exports.rooms = rooms = {
 
   set : function(key, value){
     roomsObj[key] = value;
@@ -49,4 +49,4 @@ exports.rooms = rooms = {
   all : function(){
     return roomsObj;
   }
-};
+};*/

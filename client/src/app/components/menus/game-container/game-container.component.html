@@ -1,5 +1,6 @@
 
-<banner *ngIf="inGame" [titleText]="bannerText" [subText]="gameTitle"></banner>
-<div>
-  <counting-mania></counting-mania>
+<banner *ngIf="inRoom" [titleText]="bannerText" [subText]="gameTitle"></banner>
+<banner *ngIf="!inRoom" [titleText]="'Welcome To BoxThatMinigame!'" [subText]="'Please join another online player on the left panel to begin!'"></banner>
+<div *ngIf="inRoom">
+  <counting-mania [otherUsername]="otherUsername"></counting-mania>
 </div>

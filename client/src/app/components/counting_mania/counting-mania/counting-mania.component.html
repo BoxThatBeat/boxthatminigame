@@ -1,14 +1,30 @@
-<timer></timer>
-<div class="divider">Your numbers are red</div>
-<number-display [values]="currentCount"></number-display>
+<div *ngIf="gameState === states.PreGame || gameState === states.InGame">
+  
+  <timer></timer>
+  <div class="divider">Your numbers are red</div>
+  <number-display [values]="currentCount"></number-display>
 
-<div class="card">
-  <div class="card-content has-background-beige-lighter">
-    <div class="content">
-      <label class="label has-text-centered">{{instructions}}</label>
-      <input type="text" [(ngModel)]="gameInput" (keyup.enter)="onSubmit()" class="input is-gun-metal"/>
+  <div class="card">
+    <div class="card-content has-background-beige-lighter">
+      <div class="content">
+        <label class="label has-text-centered">{{instructions}}</label>
+        <input type="text" [(ngModel)]="gameInput" (keyup.enter)="onSubmit()" class="input is-gun-metal"/>
+      </div>
     </div>
   </div>
 </div>
+<div *ngIf="gameState === states.GameWon">
+  
+  <banner [titleText]="'Game complete!'" [subText]="winMessage"></banner>
+  <a class="button is-beige-lighter" (click)="onReplayButtonPress()">
+    <strong>Replay with same user</strong>
+  </a>
+</div>
+<div *ngIf="gameState === states.GameLost">
 
-
+  <timer></timer>
+  <banner [titleText]="'Game Over!'" [subText]="lossMessage"></banner>
+  <a class="button is-beige-lighter" (click)="onReplayButtonPress()">
+    <strong>Replay with same user</strong>
+  </a>
+</div>

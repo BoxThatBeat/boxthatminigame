@@ -9,9 +9,10 @@ import { GameManagerService } from 'src/app/services/game-manager.service';
 })
 export class GameContainerComponent implements OnInit {
 
-  inGame: boolean = false;
+  inRoom: boolean = false;
   bannerText: string = '';
   gameTitle: string = 'Counting Mania';
+  otherUsername: string = '';
 
   constructor(
     private gameManagerService: GameManagerService,
@@ -34,7 +35,8 @@ export class GameContainerComponent implements OnInit {
         }
         
         this.bannerText = currentUser + ' + ' + otherUser;
-        this.inGame = true;
+        this.otherUsername = otherUser;
+        this.inRoom = true;
       }
 
     });
