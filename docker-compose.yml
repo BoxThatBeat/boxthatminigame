@@ -1,11 +1,11 @@
 services:
 
-  api:
+  server:
     container_name: boxthatminigame-backend
     build:
-      context: ./
+      context: ./server
       target: production
-    image: boxthatbeat/boxthatminigame-node
+    image: okteto.dev/boxthatminigame-server:v1
     depends_on:
       - db
     ports:
@@ -15,7 +15,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: postgres
-      DB_PASSWORD: postgres
+      DB_PASSWORD: Nickolas123!
       DB_NAME: postgres
     links:
       - db
