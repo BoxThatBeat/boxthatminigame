@@ -5,14 +5,14 @@ name: boxthatminigame
 build:
 
   # You can use the following env vars to refer to this image in your deploy commands:
-  #  - OKTETO_BUILD_API_REGISTRY: image registry
-  #  - OKTETO_BUILD_API_REPOSITORY: image repo
-  #  - OKTETO_BUILD_API_IMAGE: image name
-  #  - OKTETO_BUILD_API_TAG: image tag
-  api:
-    context: .
+  #  - OKTETO_BUILD_SERVER_REGISTRY: image registry
+  #  - OKTETO_BUILD_SERVER_REPOSITORY: image repo
+  #  - OKTETO_BUILD_SERVER_IMAGE: image name
+  #  - OKTETO_BUILD_SERVER_TAG: image tag
+  server:
+    context: server
     dockerfile: Dockerfile
-    target: production
+    target: dev
     image: boxthatbeat/boxthatminigame-node
 
 # The deploy section defines how to deploy your development environment
