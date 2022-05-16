@@ -1,4 +1,4 @@
-FROM okteto.dev/boxthatminigame-server:v1
+FROM node:16
 
 # Create app directory
 WORKDIR /app

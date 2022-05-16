@@ -12,7 +12,6 @@ build:
   server:
     context: server
     dockerfile: Dockerfile
-    target: dev
     image: okteto.dev/boxthatminigame-server:v1
 
 # The deploy section defines how to deploy your development environment
