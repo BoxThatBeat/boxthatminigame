@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  socketUrl: 'server:3000'
+  socketUrl: 'https://server-boxthatbeat.cloud.okteto.net'
 };
