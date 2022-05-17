@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 const Sequelize = require('sequelize');
+require('dotenv').config()
 
 const app = express();
 app.use(cors());
