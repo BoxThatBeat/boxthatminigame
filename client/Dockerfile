@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18.1-alpine3.14
 
 # Install bash
 RUN apk add --no-cache bash
@@ -9,7 +9,10 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install -g @angular/cli
-RUN npm install
+
+RUN apk add --no-cache --virtual .gyp python3 make g++ \
+    && npm install \
+    && apk del .gyp
 
 EXPOSE 4200
 
