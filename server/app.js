@@ -64,7 +64,7 @@ const server = http.createServer(app);
 // Initialize SocketIO and setup listenners and emitters
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:4200",
+    origin: "https://frontend-boxthatbeat.cloud.okteto.net/",
     methods: ["GET", "POST"]
   }
 });
