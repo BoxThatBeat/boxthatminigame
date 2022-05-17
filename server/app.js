@@ -62,17 +62,12 @@ const server = http.createServer(app);
 
 
 // Initialize SocketIO and setup listenners and emitters
-const io = require("socket.io")(server);
-
-//TODO add cors policy
-/*
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://frontend-boxthatbeat.cloud.okteto.net/", //TODO add back localhost:4200 for dev
+    origin: "https://frontend-boxthatbeat.cloud.okteto.net", //TODO add back localhost:4200 for dev
     methods: ["GET", "POST"]
   }
 });
-*/
 
 const Response = require('./models/Response');
 const User = require('./models/user')(db.sequelize, Sequelize.DataTypes, Sequelize.Model);
