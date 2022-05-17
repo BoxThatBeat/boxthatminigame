@@ -1,11 +1,9 @@
-FROM node:8
+FROM node:12.7-alpine AS build
 
-RUN mkdir /usr/src/app 
- 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
+
 RUN npm install
 
 COPY . .
