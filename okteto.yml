@@ -14,6 +14,11 @@ build:
     dockerfile: Dockerfile
     image: okteto.dev/boxthatminigame-server:v1
 
+  client:
+    context: client
+    dockerfile: Dockerfile
+    image: okteto.dev/boxthatminigame-client:v1
+
 # The deploy section defines how to deploy your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#deploy
 deploy:

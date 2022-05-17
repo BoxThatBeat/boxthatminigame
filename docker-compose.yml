@@ -1,6 +1,18 @@
 version: '3'
 services:
 
+  frontend:
+    image: okteto.dev/boxthatminigame-client:v1
+    container_name: boxthatminigame-frontend
+    build: ./client
+    depends_on:
+      - server
+    volumes:
+      - ./client:/usr/src/app'
+    ports: 
+      - '4200:4200'
+    command: > 
+      bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
   server:
     container_name: boxthatminigame-backend
     image: okteto.dev/boxthatminigame-server:v1
