@@ -13,7 +13,7 @@ services:
       - '4200:4200'
     command: sh -c "
             npm i &&
-            ng serve --host 0.0.0.0 --port 4200 --configuration=production"
+            ng serve --host 0.0.0.0 --port 4200 --disable-host-check --configuration=production"
   server:
     container_name: boxthatminigame-backend
     image: okteto.dev/boxthatminigame-server:v1
