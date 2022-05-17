@@ -2,6 +2,7 @@ services:
 
   server:
     container_name: boxthatminigame-backend
+    image: okteto.dev/boxthatminigame-server:v1
     build:
       context: ./server
     depends_on:
@@ -18,10 +19,17 @@ services:
       DB_NAME: boxthatminigame
 
   db:
+    container_name: db
     image: postgres:14.1-alpine
-    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Nickolas123!
+      - POSTGRES_DB=boxthatminigame
     ports:
       - '5432:5432'
+    volumes:
+      - pgdata1:/var/lib/posgressql/data
+    
+
+volumes:
+  pgdata1: {}
