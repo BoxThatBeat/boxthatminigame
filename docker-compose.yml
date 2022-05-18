@@ -30,6 +30,7 @@ services:
       DB_USER: postgres
       DB_PASSWORD: Nickolas123!
       DB_NAME: boxthatminigame
+      FRONTEND_URL: https://frontend-boxthatbeat.cloud.okteto.net
 
   postgres-db:
     container_name: postgres-db

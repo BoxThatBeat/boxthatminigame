@@ -7,9 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from './_helpers/jwt.interceptor';
-import { fakeBackendProvider } from './_helpers/fake-backend';
+import { HttpClientModule } from '@angular/common/http';
 
 /* Components */
 import { NavbarComponent } from './components/menus/navbar/navbar.component';
@@ -52,12 +50,7 @@ const config: SocketIoConfig = {
     HttpClientModule,
 		SocketIoModule.forRoot(config)
 	],
-	providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-
-    // provider used to create fake backend
-    fakeBackendProvider
-],
+	providers: [],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

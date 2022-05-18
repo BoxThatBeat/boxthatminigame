@@ -10,31 +10,10 @@ require('dotenv').config()
 const app = express();
 app.use(cors());
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
 
 // Initialize SQL Database
 const db = require("./sequelize_init");
@@ -52,7 +31,6 @@ db.sequelize.sync()
 });
 
 
-var debug = require('debug')('server:server');
 var http = require('http');
 
 const port = normalizePort(process.env.PORT || '3000');
@@ -64,7 +42,7 @@ const server = http.createServer(app);
 // Initialize SocketIO and setup listenners and emitters
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://frontend-boxthatbeat.cloud.okteto.net", //TODO add back localhost:4200 for dev
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"]
   }
 });
@@ -73,6 +51,8 @@ const Response = require('./models/Response');
 const User = require('./models/user')(db.sequelize, Sequelize.DataTypes, Sequelize.Model);
 
 const localStorage = require('./localStorage');
+
+// Socket IO handling
 
 io.on("connection", socket => {
 
@@ -129,8 +109,6 @@ io.on("connection", socket => {
  * Listen on provided port, on all network interfaces.
  */
 server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
 
 
 /**
@@ -151,44 +129,4 @@ function normalizePort(val) {
   }
 
   return false;
-}
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
 }
