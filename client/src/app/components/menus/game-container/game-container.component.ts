@@ -49,10 +49,16 @@ export class GameContainerComponent implements OnInit {
       }
 
     });
+
+    this.gameManagerService.userLeftEvent.subscribe( (username: string) => {
+      this.alertService.writeError(`${username} has left the game.`, AlertType.Main);
+    })
   }
 
   onLeaveGame() {
-    
+    this.inRoom = false;
+    this.gameManagerService.leaveGame(this.accountService.userValue.username);
+    this.alertService.writeSuccess("Left game.", AlertType.Main);
   }
 
 }

@@ -9,6 +9,7 @@ export class GameManagerService {
 
   invitedEvent: EventEmitter<string> = new EventEmitter();
   joinedEvent: EventEmitter<Array<string>> = new EventEmitter();
+  userLeftEvent: EventEmitter<string> = new EventEmitter();
 
   isInGame: boolean = false;
 
@@ -34,6 +35,15 @@ export class GameManagerService {
         this.joinedEvent.emit(response.message.usernames);
       }
     });
+
+    socket.on("game:userleft", (response:Response) => {
+
+      if (response.isError) {
+        console.log(response.message);
+      } else {
+        this.userLeftEvent.emit(response.message.username);
+      }
+    });
   }
 
   inviteUser(inviter: string, invited: string) {
@@ -42,6 +52,11 @@ export class GameManagerService {
 
   joinUser(accepter: string, inviter: string) {
     this.socket.emit('game:joinuser', { payload: {'accepter': accepter, 'inviter': inviter}});
+  }
+
+  leaveGame(username: string) {
+    this.isInGame = false;
+    this.socket.emit('game:leavegame', { payload: {'username': username}});
   }
 
   /*

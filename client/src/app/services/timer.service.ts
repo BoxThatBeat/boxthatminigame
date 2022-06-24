@@ -33,6 +33,7 @@ export class TimerService {
   public resetAll(): void {
     this.totalMilliseconds.next(0);
     this.elapsedMilliseconds.next(0);
+    clearInterval(this.totalMsIntervalId);
   }
 
   public addElapsedToTotal(): void {
