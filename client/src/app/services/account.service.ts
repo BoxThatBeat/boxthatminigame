@@ -10,6 +10,8 @@ export class AccountService {
     private userSubject: BehaviorSubject<User>;
     public user: Observable<User>;
 
+    public isLoggedIn: boolean = false;
+
     otherUserLoginEvent: EventEmitter<string> = new EventEmitter();
     otherUserLogoutEvent: EventEmitter<string> = new EventEmitter();
 
@@ -24,6 +26,9 @@ export class AccountService {
         // When our socket has connected to the server it will ask us if we are signed in to associate the new socketId to username
         socket.on('connection:new', (serverCallback: (currentUsername: string) => void) => {
           serverCallback(this.userSubject.value.username);
+          if (this.userSubject.value != undefined && this.userSubject.value.username != '') {
+            this.isLoggedIn = true;
+          }
         });
 
         socket.on("otheruser:login", (username: string) => {
@@ -51,11 +56,13 @@ export class AccountService {
     }
 
     login(user: User, clientCallback: (response: Response) => void) {
+      this.isLoggedIn = true;
       this.signedInEvent.emit(user.username);
       this.socket.emit('user:login', {payload: user}, clientCallback);
     }
 
     logout(user: User): void {
+      this.isLoggedIn = false;
       localStorage.removeItem('user');
       this.userSubject.next(new User());
 

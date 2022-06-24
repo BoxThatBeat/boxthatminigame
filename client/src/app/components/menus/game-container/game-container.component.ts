@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertType } from 'src/app/models/alert-type.model';
 import { AccountService } from 'src/app/services/account.service';
+import { AlertService } from 'src/app/services/alert.service';
 import { GameManagerService } from 'src/app/services/game-manager.service';
 
 @Component({
@@ -10,13 +12,18 @@ import { GameManagerService } from 'src/app/services/game-manager.service';
 export class GameContainerComponent implements OnInit {
 
   inRoom: boolean = false;
-  bannerText: string = '';
-  gameTitle: string = 'Counting Mania';
+  inRoomBannerText: string = '';
+  inRoomSubText: string = 'Counting Mania';
+
+  outOfRoomBannerText: string = 'Welcome To BoxThatMinigame!';
+  outOfRoomSubText: string = 'Please log in, then join another online player on the left panel to begin!';
+
   otherUsername: string = '';
 
   constructor(
     private gameManagerService: GameManagerService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private alertService: AlertService
     ) { }
 
   ngOnInit(): void {
@@ -24,6 +31,8 @@ export class GameContainerComponent implements OnInit {
     // Subscribe to event that we joined a room with another user (initiated by this user or another)
     this.gameManagerService.joinedEvent.subscribe( (usernames: Array<string>) => {
       
+      this.alertService.writeSuccess("Joined game!", AlertType.Main);
+
       var currentUser: string = this.accountService.userValue.username;
       var otherUser: string = '';
 
@@ -34,12 +43,16 @@ export class GameContainerComponent implements OnInit {
           otherUser = usernames[0];
         }
         
-        this.bannerText = currentUser + ' + ' + otherUser;
+        this.inRoomBannerText = currentUser + ' + ' + otherUser;
         this.otherUsername = otherUser;
         this.inRoom = true;
       }
 
     });
+  }
+
+  onLeaveGame() {
+    
   }
 
 }

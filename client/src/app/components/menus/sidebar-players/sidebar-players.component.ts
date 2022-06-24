@@ -3,6 +3,8 @@ import { AccountService } from 'src/app/services/account.service';
 import { Response } from 'src/app/models/response.modal';
 import { GameManagerService } from 'src/app/services/game-manager.service';
 import { SidebarUser } from 'src/app/models/sidebar-user.model';
+import { AlertService } from 'src/app/services/alert.service';
+import { AlertType } from 'src/app/models/alert-type.model';
 
 @Component({
   selector: 'sidebar-players',
@@ -15,7 +17,8 @@ export class SidebarPlayersComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private gameManagerService: GameManagerService) {
+    private gameManagerService: GameManagerService,
+    private alertService: AlertService) {
   }
   
   ngOnInit(): void {
@@ -133,24 +136,34 @@ export class SidebarPlayersComponent implements OnInit {
 
   onUserSelect(newUsernameSelection: string) {
 
-    var previouslySelectedUser: SidebarUser;
+    var loggedIn = this.accountService.isLoggedIn;
+    var inGame = this.gameManagerService.isInGame;
 
-    this.users.forEach( (user: SidebarUser) => {
-      if (user.isSelected) {
-        previouslySelectedUser = user;
-      }
-    });
+    if (loggedIn && !inGame) {
+      var previouslySelectedUser: SidebarUser;
 
-    this.users.forEach( (user: SidebarUser) => {
-      if (user.username === newUsernameSelection) {
-        user.isSelected = true;
-      }
-      if (previouslySelectedUser && (user.username != previouslySelectedUser.username)) {
-        previouslySelectedUser.isSelected = false;
-      }
-    });
+      this.users.forEach( (user: SidebarUser) => {
+        if (user.isSelected) {
+          previouslySelectedUser = user;
+        }
+      });
 
-    this.sortSidebarUsers();
+      this.users.forEach( (user: SidebarUser) => {
+        if (user.username === newUsernameSelection) {
+          user.isSelected = true;
+        }
+        if (previouslySelectedUser && (user.username != previouslySelectedUser.username)) {
+          previouslySelectedUser.isSelected = false;
+        }
+      });
+
+      this.sortSidebarUsers();
+
+    } else if (!loggedIn) {
+      this.alertService.writeError("Please login to interact with other players.", AlertType.Main);
+    } else if (inGame) {
+      this.alertService.writeError("Please leave current game to interact with other players.", AlertType.Main);
+    }
   }
 
   onInviteUser(invitedUsername: string) {
@@ -160,7 +173,5 @@ export class SidebarPlayersComponent implements OnInit {
   onJoinGame(usernameToJoin: string) {
     this.gameManagerService.joinUser(this.accountService.userValue.username, usernameToJoin);
   }
-
-  //onLeaveGame()
 
 }

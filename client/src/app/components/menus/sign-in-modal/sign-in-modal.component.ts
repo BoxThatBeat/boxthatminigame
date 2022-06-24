@@ -1,11 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/services/account.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { Response } from 'src/app/models/response.modal';
 import { User } from 'src/app/models/user.model';
 import { AlertService } from 'src/app/services/alert.service';
+import { AlertType } from 'src/app/models/alert-type.model';
 
 @Component({
   selector: 'sign-in-modal',
@@ -13,6 +14,7 @@ import { AlertService } from 'src/app/services/alert.service';
   styleUrls: ['./sign-in-modal.component.css']
 })
 export class SignInModalComponent implements OnDestroy {
+  alertTypes = AlertType;
 
   private MODAL_NAME: string = 'SignIn';
 
@@ -55,10 +57,11 @@ export class SignInModalComponent implements OnDestroy {
 
     this.accountService.login(user, (response: Response) : void => {
       if (response.isError) {
-        this.alertService.error(response.message);
+        this.alertService.writeError(response.message, AlertType.Modal);
       } else {
         this.accountService.saveUser(user)
         this.closeModal();
+        this.alertService.writeSuccess('Logged in successfully.', AlertType.Main);
       }
     });
   }
@@ -78,7 +81,7 @@ export class SignInModalComponent implements OnDestroy {
 
   private closeModal(): void {
     this.isOpen = false;
-    this.alertService.clear();
+    this.alertService.clear(AlertType.Modal);
     this.modalService.closeModal(this.MODAL_NAME);
   }
 }

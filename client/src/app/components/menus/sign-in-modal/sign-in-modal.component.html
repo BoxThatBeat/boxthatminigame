@@ -6,7 +6,7 @@
       <button class="delete"(click)="onModalCloseClick()" aria-label="close"></button>
     </header>
     <section class="modal-card-body">
-      <alert-box></alert-box>
+      <alert-box [alertType]="alertTypes.Modal"></alert-box>
 
       <form [formGroup]="form">
         <div class="field">

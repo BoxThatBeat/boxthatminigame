@@ -10,6 +10,8 @@ export class GameManagerService {
   invitedEvent: EventEmitter<string> = new EventEmitter();
   joinedEvent: EventEmitter<Array<string>> = new EventEmitter();
 
+  isInGame: boolean = false;
+
   gameId: string = '';
 
   constructor(private socket: Socket) { 
@@ -27,6 +29,7 @@ export class GameManagerService {
       if (response.isError) {
         console.log(response.message);
       } else {
+        this.isInGame = true;
         this.gameId = response.message.gameId;
         this.joinedEvent.emit(response.message.usernames);
       }

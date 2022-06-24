@@ -1,6 +1,23 @@
 
-<banner *ngIf="inRoom" [titleText]="bannerText" [subText]="gameTitle"></banner>
-<banner *ngIf="!inRoom" [titleText]="'Welcome To BoxThatMinigame!'" [subText]="'Please log in, then join another online player on the left panel to begin!'"></banner>
+<div *ngIf="inRoom">
+  <div class="level">
+    <div class="level-left">
+      <banner class="level-item" [titleText]="inRoomBannerText" [subText]="inRoomSubText"></banner>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <a class="button is-right" (click)="onLeaveGame()">
+          <strong>Leave Game</strong>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!inRoom">
+  <banner [titleText]="outOfRoomBannerText" [subText]="outOfRoomSubText"></banner>
+</div>
+
+
 <div *ngIf="inRoom">
   <counting-mania [otherUsername]="otherUsername"></counting-mania>
 </div>

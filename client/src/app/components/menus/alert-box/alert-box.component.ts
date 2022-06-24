@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AlertType } from 'src/app/models/alert-type.model';
 
 import { AlertService } from 'src/app/services/alert.service';
 
@@ -8,13 +9,17 @@ import { AlertService } from 'src/app/services/alert.service';
   templateUrl: './alert-box.component.html',
   styleUrls: ['./alert-box.component.css']
 })
-export class AlertBoxComponent implements OnDestroy {
+export class AlertBoxComponent implements OnDestroy, OnInit {
 
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
   message: any;
 
-  constructor(private alertService: AlertService) {
-    this.subscription = this.alertService.getAlert()
+  @Input() alertType: AlertType = AlertType.Main;
+
+  constructor(private alertService: AlertService) { }
+
+  ngOnInit(): void {
+    this.subscription = this.alertService.getAlert(this.alertType)
       .subscribe(message => {
         switch (message && message.type) {
           case 'success':
@@ -29,10 +34,10 @@ export class AlertBoxComponent implements OnDestroy {
 
         this.message = message;
       });
-   }
+  }
 
   onMessageCloseClick() {
-    this.alertService.clear();
+    this.alertService.clear(this.alertType);
   }
 
   ngOnDestroy() {
