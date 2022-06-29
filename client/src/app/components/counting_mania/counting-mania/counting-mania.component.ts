@@ -4,6 +4,7 @@ import { CountingManiaState } from 'src/app/models/couting-mania-state';
 import { AccountService } from 'src/app/services/account.service';
 import { GameCountingManiaService } from 'src/app/services/game-counting-mania.service';
 import { TimerService } from 'src/app/services/timer.service';
+import { Response } from 'src/app/models/response.modal';
 
 @Component({
   selector: 'counting-mania',
@@ -18,11 +19,15 @@ export class CountingManiaComponent implements OnInit {
   gameInput: string = '';
   currentCount: CountingManiaNum[] = [];
   myTurnToInput: boolean = true;
-  targetWinNumber: number = 100;
+  targetWinNumber: number = 5;
 
   lossMessage: string = '';
   winMessage: string = '';
   instructions: string = '';
+
+  ourScore:number = 0.0;
+  theirScore:number = 0.0;
+  totalScore:number = 0.0;
   
   @Input() otherUsername: string = '';
 
@@ -36,8 +41,9 @@ export class CountingManiaComponent implements OnInit {
   ngOnInit(): void {
     this.setupGame();
 
-    this.countingManiaService.recievedInputEvent.subscribe( (inputNum: number) => {
-      this.handleNewInput(inputNum, true);
+    this.countingManiaService.recievedInputEvent.subscribe( (response:Response) => {
+      this.theirScore = response.message.theirCurrentScore;
+      this.handleNewInput(response.message.input, true);
     });
   }
 
@@ -48,7 +54,7 @@ export class CountingManiaComponent implements OnInit {
 
     if (numInput != NaN) {
       this.handleNewInput(numInput, false);
-      this.countingManiaService.sendInput(numInput); // Update other user
+      this.countingManiaService.sendInput(numInput, this.timerService.totalMilliseconds.value); // Update other user
     }
 
     this.gameInput = ''; // Clear input
@@ -84,30 +90,29 @@ export class CountingManiaComponent implements OnInit {
       
       case (CountingManiaState.InGame):
 
-        // Lose condition
-        if ((isOtherUserInput && this.myTurnToInput) || (!isOtherUserInput && !this.myTurnToInput)) {
+        if ((isOtherUserInput && this.myTurnToInput) || (!isOtherUserInput && !this.myTurnToInput)) { // Played out of turn
 
-          this.currentCount.push(new CountingManiaNum(numInput, !isOtherUserInput)); // Played out of turn
+          this.currentCount.push(new CountingManiaNum(numInput, !isOtherUserInput));
           this.onLoss(isOtherUserInput, true);
               
-        } else if (numInput - this.currentCount[this.currentCount.length - 1].num != 1) { 
+        } else if (numInput - this.currentCount[this.currentCount.length - 1].num != 1) { // Incorrect number inputted
           
-          this.currentCount.push(new CountingManiaNum(numInput, !isOtherUserInput)); // Incorrect number inputted
+          this.currentCount.push(new CountingManiaNum(numInput, !isOtherUserInput)); 
           this.onLoss(isOtherUserInput, false);
 
-        } else {
-          this.currentCount.push(new CountingManiaNum(numInput, !isOtherUserInput)); // Correct number inputted
+        } else { // Correct number inputted
+          this.currentCount.push(new CountingManiaNum(numInput, !isOtherUserInput)); 
           this.myTurnToInput = isOtherUserInput;
-
-          if (numInput === this.targetWinNumber) {
-            this.onWin();
-          }
 
           if (isOtherUserInput) {
             this.timerService.startTimer();
           } else {
             this.timerService.pauseTimer();
             this.timerService.addElapsedToTotal();
+          }
+
+          if (numInput === this.targetWinNumber) { // Win condition
+            this.onWin(isOtherUserInput);
           }
         }
         break;
@@ -131,14 +136,15 @@ export class CountingManiaComponent implements OnInit {
     this.gameState = CountingManiaState.GameLost;
   }
 
-  private onWin() {
+  private onWin(isOtherUserInput: boolean) {
     this.winMessage = `Made it to ${this.targetWinNumber} without mistake!`;
     
-    this.timerService.pauseTimer();
+    this.ourScore = this.timerService.totalMilliseconds.value;
+    this.totalScore = this.ourScore + this.theirScore;
     this.gameState = CountingManiaState.GameWon;
 
-    //get the combined score from server
-    //save score to server maybe make these steps combined on the server
-    //this.gameservice.savescore(roomId) -> server asks for both users scores -> saves them and then returns to both the total score and individual scores
+    if (isOtherUserInput) { //check to ensure this is only called by one user
+      this.countingManiaService.saveScore(this.totalScore);
+    }
   }
 }

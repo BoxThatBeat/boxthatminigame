@@ -26,7 +26,7 @@ export class AccountService {
         // When our socket has connected to the server it will ask us if we are signed in to associate the new socketId to username
         socket.on('connection:new', (serverCallback: (currentUsername: string) => void) => {
           serverCallback(this.userSubject.value.username);
-          if (this.userSubject.value != undefined && this.userSubject.value.username != '') {
+          if (this.userSubject.value.username != undefined && this.userSubject.value.username != '') {
             this.isLoggedIn = true;
           }
         });

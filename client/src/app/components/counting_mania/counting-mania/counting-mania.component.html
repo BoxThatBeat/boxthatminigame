@@ -1,5 +1,4 @@
 <div *ngIf="gameState === states.PreGame || gameState === states.InGame">
-  
   <timer></timer>
   <div class="divider">Your numbers are red</div>
   <number-display [values]="currentCount"></number-display>
@@ -16,6 +15,28 @@
 <div *ngIf="gameState === states.GameWon">
   
   <banner [titleText]="'Game complete!'" [subText]="winMessage"></banner>
+  <div class="columns">
+    <div class="column has-text-centered">
+      <h3 class="is-size-3">Your Time:</h3>
+      <p class="has-text-gun-metal is-size-3">
+        {{ourScore | mstime}}
+      </p>
+    </div> 
+    <div class="column has-text-centered">
+      <h3 class="is-size-3">Their Time:</h3>
+      <p class="has-text-gun-metal is-size-3">
+        {{theirScore | mstime}}
+      </p>
+    </div>
+  </div>
+
+  <div class="has-text-centered">
+    <h2 class="is-size-2">Total Time:</h2>
+    <p class="has-text-gun-metal is-size-2">
+      {{totalScore | mstime}}
+    </p>
+  </div>
+
   <a class="button is-beige-lighter" (click)="onReplayButtonPress()">
     <strong>Replay with same user</strong>
   </a>

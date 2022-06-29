@@ -7,7 +7,7 @@ import { Response } from '../models/response.modal';
 })
 export class GameCountingManiaService {
 
-  recievedInputEvent: EventEmitter<number> = new EventEmitter();
+  recievedInputEvent: EventEmitter<Response> = new EventEmitter();
 
   constructor(private socket: Socket) {
 
@@ -16,13 +16,17 @@ export class GameCountingManiaService {
       if (response.isError) {
         console.log(response.message);
       } else {
-        this.recievedInputEvent.emit(response.message.input);
+        this.recievedInputEvent.emit(response);
       }
     });
 
    }
 
-  sendInput(inputNum: number) {
-    this.socket.emit('countingmania:sendInput', { payload: {'input': inputNum}});
+  sendInput(inputNum: number, currentScore: number) {
+    this.socket.emit('countingmania:sendInput', { payload: {'input': inputNum, 'currentScore': currentScore}});
+  }
+
+  saveScore(totalScore: number) {
+    this.socket.emit('countingmania:sendScore', { payload: {'totalScore': totalScore}});
   }
 }

@@ -21,6 +21,7 @@ import { GameContainerComponent } from './components/menus/game-container/game-c
 import { CountingManiaComponent } from './components/counting_mania/counting-mania/counting-mania.component';
 import { BannerComponent } from './components/menus/banner/banner.component';
 import { NumberDisplayComponent } from './components/counting_mania/number-display/number-display.component';
+import { FormatMsTime } from './Pipes/format-ms-time.pipe';
 
 const config: SocketIoConfig = {
 	url: environment.socketUrl, // socket server url;
@@ -40,7 +41,8 @@ const config: SocketIoConfig = {
     GameContainerComponent,
     CountingManiaComponent,
     BannerComponent,
-    NumberDisplayComponent
+    NumberDisplayComponent,
+    FormatMsTime
 	],
 	imports: [
 		BrowserModule,

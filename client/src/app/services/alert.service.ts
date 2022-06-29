@@ -30,7 +30,7 @@ export class AlertService {
           break;
       }
 
-      setTimeout( () => {this.clear(alertType);}, 3000);
+      //setTimeout( () => {this.clear(alertType);}, 3000);
     }
 
     writeError(message: string, alertType: AlertType) {
@@ -43,7 +43,7 @@ export class AlertService {
           break;
       }
 
-      setTimeout( () => {this.clear(alertType);}, 7000);
+      //setTimeout( () => {this.clear(alertType);}, 7000); TODO: determine if a delayed removal of altert is good UI
     }
 
     clear(alertType: AlertType) {
