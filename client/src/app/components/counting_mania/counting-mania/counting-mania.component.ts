@@ -19,7 +19,7 @@ export class CountingManiaComponent implements OnInit {
   gameInput: string = '';
   currentCount: CountingManiaNum[] = [];
   myTurnToInput: boolean = true;
-  targetWinNumber: number = 5;
+  targetWinNumber: number = 100;
 
   lossMessage: string = '';
   winMessage: string = '';
